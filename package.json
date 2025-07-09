@@ -1,0 +1,16 @@
+{
+  "name": "playwright-automation-project3",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test" : "playwright-tests"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.53.2",
+    "@types/node": "^24.0.10"
+  }
+}

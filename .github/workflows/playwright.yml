@@ -1,0 +1,24 @@
+name: Run Playwright Tests in Docker
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Docker
+      uses: docker/setup-buildx-action@v3
+    - name: Build Docker image
+      run: docker build -t preetiVijay/playwright-test .
+    - name: Upload Docker image to Docker hub
+      run: docker push preetiVijay/playwright-test
+    - name: Run Docker container with playwright tests
+      run: docker run --name playwright-container preetiVijay/playwright-test
+    - name: Clean up Docker container
+      if: always()
+      run: 
+          docker rm -f playwright-container || true
