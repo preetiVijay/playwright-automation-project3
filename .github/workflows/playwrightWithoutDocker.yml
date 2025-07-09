@@ -1,4 +1,4 @@
-name: Playwright Tests
+name: Playwright Tests without Docker
 on:
   push:
     branches: [ main, master ]

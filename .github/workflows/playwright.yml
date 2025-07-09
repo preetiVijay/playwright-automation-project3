@@ -14,8 +14,8 @@ jobs:
       uses: docker/setup-buildx-action@v3
     - name: Build Docker image
       run: docker build -t preetiVijay/playwright-test .
-    - name: Upload Docker image to Docker hub
-      run: docker push preetiVijay/playwright-test
+    # - name: Upload Docker image to Docker hub
+    #   run: docker push preetiVijay/playwright-test
     - name: Run Docker container with playwright tests
       run: docker run --name playwright-container preetiVijay/playwright-test
     - name: Clean up Docker container
