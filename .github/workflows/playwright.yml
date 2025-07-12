@@ -32,7 +32,9 @@ jobs:
       with:
         name: playwright-report
         path: playwright-report
+    - name: Print docker container logs (on failure)
+      if: failure()
+      run: docker logs playwright-container
     - name: Clean up Docker container
       if: always()
-      run: 
-          docker rm -f playwright-container || true
+      run: docker rm -f playwright-container || true

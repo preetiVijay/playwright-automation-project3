@@ -8,9 +8,9 @@ RUN chown -R pwuser:pwuser /app
 # Switch to Playwright's non-root user
 USER pwuser
 #install dependencies
-RUN npm install
+RUN npm ci
 # Copy project files
 COPY --chown=pwuser:pwuser . .
 # Default command (can be overridden)
 # CMD ["npx", "playwright", "test"]
-ENTRYPOINT ["npx", "playwright", "test"]
+CMD ["npx", "playwright", "test"]
