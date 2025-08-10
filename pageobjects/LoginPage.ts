@@ -13,10 +13,10 @@ export class LoginPage{
         this.page = page;
         this.loginUserEmail = page.locator(".login-form [type='email']");
         this.loginPassword = page.locator(".login-form [type='password']");
-        this.loginButton = page.locator(".login-form [type='submit']");
+        this.loginButton = page.locator(".login-form button[type='submit']");
         this.userName = page.locator(".signup-form [type='text']");
         this.emailAddress = page.locator(".signup-form [type='email']");
-        this.submitButton = page.locator(".signup-form [type='submit']");
+        this.submitButton = page.locator(".signup-form button[type='submit']");
     }
 
     async signUp(name:string, emailAddress:string){
