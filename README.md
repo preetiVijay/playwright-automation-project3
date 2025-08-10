@@ -12,7 +12,7 @@ This project demonstrates automated web application testing using Playwright Fra
 ## Setup Instructions
 
 ### Prerequisites
-- Node.js (v22 or above)
+- Node.js (v24 or above)
 - npm (Node Package Manager)
 - Docker (optional, for containerized runs)
 
