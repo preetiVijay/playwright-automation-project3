@@ -22,7 +22,7 @@ export default defineConfig({
   retries: 2,
   // retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: 2,
+  workers: 1,
   // workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
@@ -37,10 +37,10 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
-    // {
-    //   name: 'chromium',
-    //   use: { ...devices['Desktop Chrome'] },
-    // },
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+    },
 
     // {
     //   name: 'firefox',
