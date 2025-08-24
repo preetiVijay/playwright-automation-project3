@@ -27,7 +27,6 @@ test("Register User", async ({ page }) => {
     const userEmail = "priya." + Math.floor(Math.random() * 100000) + "@gmail.com";
     const loginPage = poManager.getLoginPage();
     await loginPage.signUp(firstName, userEmail);
-    // await page.pause();
 
     const signUpPage = poManager.getSignUpPage();
     await expect(signUpPage.getFormTitle()).toHaveText("Enter Account Information");

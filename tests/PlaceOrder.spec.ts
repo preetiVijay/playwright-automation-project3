@@ -36,7 +36,6 @@ test("Place Order: Register before Checkout", async ({ page }) => {
     const accountCreatedMsg = page.locator(".text-center b");
     await expect(accountCreatedMsg).toBeVisible();
     await expect(accountCreatedMsg).toHaveText("Account Created!");
-    await page.pause();
 
     // Continue after account creation
     const continueButton = page.locator(".pull-right a.btn-primary");
@@ -69,14 +68,11 @@ test("Place Order: Register before Checkout", async ({ page }) => {
     // Click on Place Order
     await page.locator(".container .check_out").click();
     // Fill payment details
-    await page.locator("input[name='name_on_card']").fill("Priya Shukla");
-    await page.locator("input[name='card_number']").fill("1234567890123456");
-    await page.locator("input[name='cvc']").fill("123");
-    await page.locator("input[name='expiry_month']").fill("12");
-    await page.locator("input[name='expiry_year']").fill("2025");
-    await page.locator("#submit").click();
-     // Verify order confirmation
+    const paymentPage = poManager.getPaymentPage();
+    await paymentPage.enterPaymentDetails("Priya Shukla", "1234567890123456", "123", "12", "2025");
+    await paymentPage.confirmOrder();
     
+    // Verify order confirmation
     await expect(page).toHaveTitle("Automation Exercise - Order Placed");
     const orderPlacedHeading = page.locator(".col-sm-offset-1 h2").first();
     await expect(orderPlacedHeading).toBeVisible({ timeout: 10000 }); // Wait up to 10s for visibility
