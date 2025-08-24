@@ -58,7 +58,7 @@ docker run --rm playwright-test
 
 ### CI/CD Integration
 - GitHub Actions workflows are provided:
-  - `.github/workflows/playwright.yml` (Docker-based)
+  - `.github/workflows/playwrightWithDocker.yml` (Docker-based)
   - `.github/workflows/playwrightWithoutDocker.yml` (direct Node.js)
 
 ### Project Structure
@@ -66,6 +66,7 @@ docker run --rm playwright-test
 - `pageobjects/` - Page Object Model classes
 - `playwright.config.ts` - Playwright configuration
 - `DockerFile` - Docker setup for CI/CD
+- `JenkinsFile` - Jenkins pipeline for CI/CD
 - `.github/workflows/` - CI/CD workflows
 
 ## Additional Notes

@@ -20,7 +20,7 @@ export class SignUpPage {
     mobileNumber: Locator;
     createAccountbutton: Locator;
 
-    constructor(page:Page){
+    constructor(page: Page) {
         this.page = page;
         this.formTitle = page.locator(".login-form h2 b").first();
         this.title = page.locator("#id_gender2");
@@ -39,19 +39,18 @@ export class SignUpPage {
         this.zipCode = page.locator("#zipcode");
         this.mobileNumber = page.locator("#mobile_number");
         this.createAccountbutton = page.locator("button[type='submit']").first();
-
     }
 
-    getFormTitle():Locator{
+    getFormTitle(): Locator {
         return this.formTitle;
     }
 
-    async createAccount(password:string,firstName:string,lastName:string){
+    async createAccount(password: string, firstName: string, lastName: string) {       
         await this.title.click();
         await this.password.fill(password);
-        await this.day.selectOption({value:"12"});
-        await this.months.selectOption({value:"2"});
-        await this.years.selectOption({value:"2000"});
+        await this.day.selectOption({ value: "12" });
+        await this.months.selectOption({ value: "2" });
+        await this.years.selectOption({ value: "2000" });
         await this.newsLetter.click();
         await this.optin.click();
         await this.firstName.fill(firstName);
