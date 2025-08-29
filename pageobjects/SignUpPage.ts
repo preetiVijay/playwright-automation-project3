@@ -22,7 +22,7 @@ export class SignUpPage {
 
     constructor(page: Page) {
         this.page = page;
-        this.formTitle = page.locator(".login-form h2 b").first();
+        this.formTitle = page.getByRole("heading", { name: "enter account information" });
         this.title = page.locator("#id_gender2");
         this.password = page.locator("#password");
         this.day = page.locator("select[id=days]");
@@ -38,7 +38,7 @@ export class SignUpPage {
         this.city = page.locator("#city");
         this.zipCode = page.locator("#zipcode");
         this.mobileNumber = page.locator("#mobile_number");
-        this.createAccountbutton = page.locator("button[type='submit']").first();
+        this.createAccountbutton = page.getByRole("button", { name: "create account" });
     }
 
     getFormTitle(): Locator {

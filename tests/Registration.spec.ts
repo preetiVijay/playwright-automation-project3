@@ -12,7 +12,7 @@ test.beforeEach(async ({ page }) => {
     });
     await expect(page).toHaveTitle("Automation Exercise");
     await page.waitForLoadState('networkidle');
-    consentButton = page.locator(".fc-footer-buttons .fc-cta-consent");
+    consentButton = page.getByRole("button", { name: "consent" });
     if (await consentButton.isVisible()) {
         await consentButton.click();
     }
@@ -20,42 +20,34 @@ test.beforeEach(async ({ page }) => {
 
 test("Register User", async ({ page }) => {
     const firstName = "Priya";
-    // await page.locator("a:has-text('Signup / Login')").click();
-    await page.locator(".navbar-nav li:nth-child(4)").click();
-    await expect(page.locator(".signup-form h2")).toHaveText("New User Signup!");
+    await page.getByRole("link", { name: "signup / login" }).click();
+    await expect(page.getByRole("heading", { name: "new user signup!" })).toBeVisible();
 
     const userEmail = "priya." + Math.floor(Math.random() * 100000) + "@gmail.com";
     const loginPage = poManager.getLoginPage();
     await loginPage.signUp(firstName, userEmail);
 
     const signUpPage = poManager.getSignUpPage();
-    await expect(signUpPage.getFormTitle()).toHaveText("Enter Account Information");
+    await expect(signUpPage.getFormTitle()).toBeVisible();
     await signUpPage.createAccount("shsdgsgds@3442", firstName, "Shukla");
 
-    const accountCreatedMsg = page.locator(".text-center b");
-    await expect(accountCreatedMsg).toBeVisible();
-    await expect(accountCreatedMsg).toHaveText("Account Created!");
-    await page.locator(".pull-right a.btn-primary").click();
+    await expect(page.getByRole("heading", { name: "account created!" })).toBeVisible();
+    await page.getByRole("link", { name: "continue" }).click();
 
-    // Verify logged in
-    const loggedInText = page.locator("li:has-text('Logged in as')");
-    await loggedInText.waitFor({ state: "visible" });
-    await expect(loggedInText).toContainText(`Logged in as ${firstName}`);
+    await expect(page.getByText(`Logged in as ${firstName}`)).toBeVisible();
 
     // Delete account
-    await page.locator(".navbar-nav li").nth(4).click();
-    const accountDeletedMsg = page.locator(".text-center b");
-    await expect(accountDeletedMsg).toHaveText("Account Deleted!");
+    await page.getByRole("link", { name: "delete account" }).click();
+    await expect(page.getByRole("heading", { name: "account deleted!" })).toBeVisible();
 
-    // Continue after deletion
-    await page.locator(".pull-right a.btn-primary").click();
+    await page.getByRole("link", { name: "continue" }).click();
 });
 
 test("Register User with existing email", async ({ page }) => {
     const firstName = "Preeti";
 
-    await page.locator(".navbar-nav li:nth-child(4)").click();
-    await expect(page.locator(".signup-form h2")).toHaveText("New User Signup!");
+    await page.getByRole("link", { name: "signup / login" }).click();
+    await expect(page.getByRole("heading", { name: "new user signup!" })).toBeVisible();
 
     const userEmail = "preetiV2412@gmail.com";
     const loginPage = poManager.getLoginPage();

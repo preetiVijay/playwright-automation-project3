@@ -11,45 +11,40 @@ test.beforeEach(async ({ page }) => {
     });
     await expect(page).toHaveTitle("Automation Exercise");
     await page.waitForLoadState('networkidle');
-    const consentButton = page.locator(".fc-footer-buttons .fc-cta-consent");
+    const consentButton = page.getByRole("button", { name: "consent"});
     if (await consentButton.isVisible()) {
         await consentButton.click();
     }
 });
 
 test("Login User with correct email and password", async({page})=>{
-    await page.locator(".navbar-nav li:nth-child(4)").click();
-    await expect(page.locator(".login-form h2")).toHaveText("Login to your account");
+    await page.getByRole("link", { name: "signup / login" }).click();
+    await expect(page.getByRole("heading", { name: "login to your account" })).toBeVisible();
 
     const loginPage = poManager.getLoginPage();
-    await loginPage.logIn("preetiV2412@gmail.com","Qazwsx@0987");
-    await page.locator(".navbar-nav li:nth-child(10)").waitFor({ state: "visible" });
-    expect(await page.locator(".navbar-nav li:nth-child(10)").textContent()).toContain(" Logged in as Preeti");
+    await loginPage.logIn("preetiV2412@gmail.com", "Qazwsx@0987");
+    await expect(page.getByText("Logged in as Preeti")).toBeVisible();
 });
 
 test("Login User with incorrect email and password", async({page})=>{
-    
-    await page.locator(".navbar-nav li:nth-child(4)").click();
-    await expect(page.locator(".login-form h2")).toHaveText("Login to your account");
+    await page.getByRole("link", { name: "signup / login" }).click();
+    await expect(page.getByRole("heading", { name: "login to your account" })).toBeVisible();
 
     const loginPage = poManager.getLoginPage();
-    await loginPage.logIn("preetiV2413@gmail.com","Qazwsx@0987");
+    await loginPage.logIn("preetiV2413@gmail.com", "Qazwsx@0987");
 
-    expect(await page.locator(".login-form p").textContent()).toContain("Your email or password is incorrect!");
+    await expect(page.getByText("Your email or password is incorrect!")).toBeVisible();
 });
 
 test("Logout user", async({page})=>{
-    
-    await page.locator(".navbar-nav li:nth-child(4)").click();
-    await expect(page.locator(".login-form h2")).toHaveText("Login to your account");
+    await page.getByRole("link", { name: "signup / login" }).click();
+    await expect(page.getByRole("heading", { name: "login to your account" })).toBeVisible();
 
     const loginPage = poManager.getLoginPage();
-    await loginPage.logIn("preetiV2412@gmail.com","Qazwsx@0987");
-    await page.locator(".navbar-nav li:nth-child(10)").waitFor({ state: "visible" });
-    expect(await page.locator(".navbar-nav li:nth-child(10)").textContent()).toContain(" Logged in as Preeti");
+    await loginPage.logIn("preetiV2412@gmail.com", "Qazwsx@0987");
+    await expect(page.getByText("Logged in as Preeti")).toBeVisible();
 
     // Logout account
-    await page.locator(".navbar-nav li:nth-child(4)").waitFor({ state: "visible" });
-    await page.locator(".navbar-nav li:nth-child(4)").click();
+    await page.getByRole("link", { name: "logout" }).click();
     await expect(page).toHaveTitle("Automation Exercise - Signup / Login");
 });

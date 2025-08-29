@@ -16,7 +16,7 @@ export class PaymentPage {
         this.cvc = page.locator("input[name='cvc']");
         this.expirationMonth = page.locator("input[name='expiry_month']");
         this.expirationYear = page.locator("input[name='expiry_year']");
-        this.payAndConfirmOrderButton = page.locator("#submit");
+        this.payAndConfirmOrderButton = page.getByRole("button", { name: "pay and confirm order" });
     }
 
     async enterPaymentDetails(nameOnCard: string, cardNumber: string, cvc: string, expirationMonth: string, expirationYear: string) {

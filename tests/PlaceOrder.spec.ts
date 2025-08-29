@@ -12,41 +12,33 @@ test.beforeEach(async ({ page }) => {
     });
     await expect(page).toHaveTitle("Automation Exercise");
     await page.waitForLoadState('networkidle');
-    consentButton = page.locator(".fc-footer-buttons .fc-cta-consent");
+    const consentButton = page.getByRole("button", { name: "consent" });
     if (await consentButton.isVisible()) {
         await consentButton.click();
     }
 });
 
 test("Place Order: Register before Checkout", async ({ page }) => {
-    const firstName = "Priya";
+   const firstName = "Priya";
 
     // Navigate to Signup/Login
-    await page.locator(".navbar-nav li:nth-child(4)").click();
-    await expect(page.locator(".signup-form h2")).toHaveText("New User Signup!");
+    await page.getByRole("link", { name: "signup / login" }).click();
+    await expect(page.getByRole("heading", { name: "new user signup!" })).toBeVisible();
 
     const userEmail = "priya." + Math.floor(Math.random() * 100000) + "@gmail.com";
     const loginPage = poManager.getLoginPage();
     await loginPage.signUp(firstName, userEmail);
 
     const signUpPage = poManager.getSignUpPage();
-    await expect(signUpPage.getFormTitle()).toHaveText("Enter Account Information");
+    await expect(signUpPage.getFormTitle()).toBeVisible();
     await signUpPage.createAccount("shsdgsgds@3442", firstName, "Shukla");
 
-    const accountCreatedMsg = page.locator(".text-center b");
-    await expect(accountCreatedMsg).toBeVisible();
-    await expect(accountCreatedMsg).toHaveText("Account Created!");
+    await expect(page.getByRole("heading", { name: "account created!" })).toBeVisible();
+    await page.getByRole("link", { name: "continue" }).click();
 
-    // Continue after account creation
-    const continueButton = page.locator(".pull-right a.btn-primary");
-    await expect(continueButton).toBeVisible({ timeout: 10000 }); // Wait up to 10s for visibility
-    await continueButton.click();
+    await expect(page.getByText(`Logged in as ${firstName}`)).toBeVisible();
 
-    // Verify logged in
-    const loggedInText = page.locator("li:has-text('Logged in as')");
-    await loggedInText.waitFor({ state: "visible" });
-    await expect(loggedInText).toContainText(`Logged in as ${firstName}`);
-
+    // Add product to cart
     const productsList = page.locator(".productinfo");
     const productCount = await productsList.count();
     // Add product to cart
@@ -59,6 +51,7 @@ test("Place Order: Register before Checkout", async ({ page }) => {
     }
 
     await page.locator('.close-modal').click();
+
     // Click on Cart button
     await page.locator(".shop-menu li:nth-child(3)").click();
     // Verify that cart page is displayed
