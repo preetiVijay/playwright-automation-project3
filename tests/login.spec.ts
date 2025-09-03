@@ -48,3 +48,7 @@ test("Logout user", async({page})=>{
     await page.getByRole("link", { name: "logout" }).click();
     await expect(page).toHaveTitle("Automation Exercise - Signup / Login");
 });
+
+test.afterEach(async({page})=>{
+    await page.close();
+});

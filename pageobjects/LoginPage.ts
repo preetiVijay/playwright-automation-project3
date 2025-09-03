@@ -1,4 +1,5 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { logger } from "../utils/logger";
 
 export class LoginPage{
     page: Page;
@@ -20,14 +21,18 @@ export class LoginPage{
     }
 
     async signUp(name:string, emailAddress:string){
+        logger.info("Signing up user with name: " + name + " and email: " + emailAddress);
         await this.userName.fill(name);
         await this.emailAddress.fill(emailAddress);
         await this.submitButton.click();
+        logger.info("Sign up submitted");
     }
 
     async logIn(emailAddress:string, password:string){
+        logger.info("Logging in user with email: " + emailAddress);
         await this.loginUserEmail.fill(emailAddress);
         await this.loginPassword.fill(password);
         await this.loginButton.click();
+        logger.info("Login submitted");
     }
 }

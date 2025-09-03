@@ -56,3 +56,7 @@ test("Register User with existing email", async ({ page }) => {
     const existingEmailError = page.locator(".signup-form p");
     await expect(existingEmailError).toHaveText("Email Address already exist!");
 });
+
+test.afterEach(async({page})=>{
+    await page.close();
+});

@@ -1,4 +1,5 @@
 import { Page, Locator } from "@playwright/test";
+import { logger } from "../utils/logger";
 
 export class PaymentPage {
     page: Page;
@@ -20,15 +21,19 @@ export class PaymentPage {
     }
 
     async enterPaymentDetails(nameOnCard: string, cardNumber: string, cvc: string, expirationMonth: string, expirationYear: string) {
+        logger.info("Entering payment details");
         await this.nameOnCard.fill(nameOnCard);
         await this.cardNumber.fill(cardNumber);
         await this.cvc.fill(cvc);
         await this.expirationMonth.fill(expirationMonth);
         await this.expirationYear.fill(expirationYear);
+        logger.info("Payment details entered");
     }
 
     async confirmOrder() {
+        logger.info("Confirming order")
         await this.payAndConfirmOrderButton.click();
+        logger.info("Order confirmed");
     }
 
 }

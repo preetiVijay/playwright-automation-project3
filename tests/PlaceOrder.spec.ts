@@ -83,3 +83,7 @@ test("Place Order: Register before Checkout", async ({ page }) => {
     // Continue after deletion
     await page.locator(".pull-right a.btn-primary").click();
 }); 
+
+test.afterEach(async({page})=>{
+    await page.close();
+});

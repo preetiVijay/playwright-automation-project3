@@ -1,4 +1,5 @@
 import { Page, Locator } from "@playwright/test";
+import { logger } from "../utils/logger";
 
 export class SignUpPage {
     page: Page;
@@ -45,7 +46,8 @@ export class SignUpPage {
         return this.formTitle;
     }
 
-    async createAccount(password: string, firstName: string, lastName: string) {       
+    async createAccount(password: string, firstName: string, lastName: string) {   
+        logger.info("Creating account for " + firstName + " " + lastName);    
         await this.title.click();
         await this.password.fill(password);
         await this.day.selectOption({ value: "12" });
@@ -62,6 +64,7 @@ export class SignUpPage {
         await this.zipCode.fill("780342");
         await this.mobileNumber.fill("9213212341");
         await this.createAccountbutton.click();
+        logger.info("Account creation submitted");
     }
 
 }
